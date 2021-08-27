@@ -44,11 +44,7 @@ class Job
      * @ORM\Column(type="string", length=255)
      */
     private $location;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
+    
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -81,7 +77,7 @@ class Job
     private $expiresAt;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -99,6 +95,11 @@ class Job
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $url;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
 
 
     public function getId(): ?int
@@ -262,24 +263,24 @@ class Job
         return $this;
     }
 
-    public function getExpiresAt(): ?\DateTimeImmutable
+    public function getExpiresAt(): ?\DateTime
     {
         return $this->expiresAt;
     }
 
-    public function setExpiresAt(\DateTimeImmutable $expiresAt): self
+    public function setExpiresAt(\DateTime $expiresAt): self
     {
         $this->expiresAt = $expiresAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
