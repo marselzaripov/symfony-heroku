@@ -31,7 +31,7 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $jobSensioLabs->setActivated(true);
         $jobSensioLabs->setToken('job_sensio_labs');
         $jobSensioLabs->setEmail('job@example.com');
-        $jobSensioLabs->setExpiresAt(new \DateTime('+30 days'));
+        $jobSensioLabs->setExpiresAt(new \DateTime('-10 days'));
         $jobSensioLabs->setCreatedAt(new \DateTime('+30 days'));
         $jobSensioLabs->setUpdatedAt(new \DateTime('+30 days'));
 
@@ -57,7 +57,28 @@ class JobFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($jobExtremeSensio);
 
         $manager->flush();
+
+        for ($i = 100; $i <= 130; $i++) {
+            $job = new Job();
+            $job->setCategory($manager->merge($this->getReference('category-programming')));
+            $job->setType('full-time');
+            $job->setCompany('Company ' . $i);
+            $job->setPosition('Web Developer');
+            $job->setLocation('Paris, France');
+            $job->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit.');
+            $job->setHowToApply('Send your resume to lorem.ipsum [at] dolor.sit');
+            $job->setPublic(true);
+            $job->setActivated(true);
+            $job->setToken('job_' . $i);
+            $job->setEmail('job@example.com');
+
+            $manager->persist($job);
+        }
+
+        $manager->flush();
     }
+
+
 
     /**
      * @return array

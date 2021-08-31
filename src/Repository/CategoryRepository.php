@@ -18,6 +18,16 @@ class CategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Category::class);
     }
+    public function findByWithActiveJobs()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->innerJoin('c.jobs', 'j')
+            ->where('j.expiresAt > :date')
+            ->setParameter('date', new \DateTime())
+            ->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Category[] Returns an array of Category objects

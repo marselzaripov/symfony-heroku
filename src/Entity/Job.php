@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\JobRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
+ * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  * @ORM\Entity(repositoryClass=JobRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Job
 {
@@ -297,5 +300,18 @@ class Job
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+
+        if (!$this->expiresAt) {
+            $this->expiresAt = (clone $this->createdAt)->modify('+30 days');
+        }
     }
 }
